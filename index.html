@@ -52,10 +52,15 @@
         action: "save", 
         experiment_id: "q0Wi69Z31nb3",
         filename: "stroop_data.csv", 
-        data_string: ()=>jsPsych.data.get().csv() 
+        data_string: ()=>jsPsych.data.get().csv(),
+        on_finish: function(data){alert(data.result.message)}
+    };
+    const end_trial = { 
+        type: jsPsychHtmlKeyboardResponse, 
+        stimulus: 'Nothing left to do here.' 
     };
 
-    jsPsych.run([stroop_procedure]);
+    jsPsych.run([stroop_procedure, save_data_trial, end_trial]);
 
     </script> 
 </html>
