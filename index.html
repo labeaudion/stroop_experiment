@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <title>My Experiment</title> 
+        <script src="https://unpkg.com/jspsych@7.3.4"></script> 
+        <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.2.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
+        <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" /> 
+    </head> 
+    
+    <body></body> 
+
+    <script> 
+    const jsPsych = initJsPsych(); 
+
+    var stroop_procedure = {
+        timeline: [
+            {
+                type: jsPsychHtmlKeyboardResponse,
+                stimulus: 'Press any key when ready for the next trial.'
+            },
+            {
+                type: jsPsychHtmlButtonResponse,
+                stimulus: function() {
+                    var html = `
+                        <p style="color:${jsPsych.timelineVariable('color')}; font-size:48px;">${jsPsych.timelineVariable('word')}</p>`;
+                    return html;
+                },
+                choices: ["MATCH", "NOT"],
+            }
+        ],
+        timeline_variables: [
+            { word: 'RED', color: 'red' },
+            { word: 'RED', color: 'blue' },
+            { word: 'RED', color: 'green' },
+            { word: 'BLUE', color: 'red' },
+            { word: 'BLUE', color: 'blue' },
+            { word: 'BLUE', color: 'green' },
+            { word: 'GREEN', color: 'red' },
+            { word: 'GREEN', color: 'blue' },
+            { word: 'GREEN', color: 'green' }
+        ],
+        sample: {
+            type: 'fixed-repetitions',
+            size: 2
+        }
+
+    }
+
+    jsPsych.run([stroop_procedure]);
+
+    </script> 
+</html>
